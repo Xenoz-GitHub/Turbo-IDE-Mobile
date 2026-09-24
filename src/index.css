@@ -1,0 +1,285 @@
+@import "tailwindcss";
+
+@layer utilities {
+  /* Rainbow Running Text Animation for ENCRYPTED CREW credits */
+  @keyframes rainbowRun {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .text-rainbow-running {
+    background: linear-gradient(
+      90deg,
+      #ff0000,
+      #ff7700,
+      #ffdd00,
+      #00ff00,
+      #00ffff,
+      #0077ff,
+      #9900ff,
+      #ff0088,
+      #ff0000
+    );
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbowRun 3s ease infinite;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    display: inline-block;
+  }
+
+  /* CRT Scanlines simulation */
+  .crt-scanlines::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    z-index: 20;
+    background-size: 100% 3px, 6px 100%;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  .crt-glow {
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.4), 0 0 6px rgba(0, 170, 255, 0.2);
+  }
+
+  /* Classic DOS font family */
+  .font-dos {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+  }
+
+  /* Authentic Borland Turbo C++ Desktop Dither Pattern (as in 2nd attached screenshot) */
+  .dos-desktop-pattern {
+    background-color: #5555aa;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      #000088 0px,
+      #000088 2px,
+      #5555aa 2px,
+      #5555aa 4px
+    );
+  }
+
+  /* Authentic DOS 0-blur solid black drop shadow */
+  .dos-shadow {
+    box-shadow: 6px 6px 0px #000000;
+  }
+
+  .dos-shadow-lg {
+    box-shadow: 8px 8px 0px #000000;
+  }
+
+  .dos-shadow-sm {
+    box-shadow: 3px 3px 0px #000000;
+  }
+
+  /* Completely hide native browser scrollbars */
+  .scrollbar-none {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+/* Styled Retro / Modern Scrollbars across all views */
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #00aaaa #0d0e12;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090a0f;
+  border-left: 1px solid rgba(0, 170, 170, 0.12);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #008888 0%, #00aaaa 100%);
+  border-radius: 4px;
+  border: 2px solid #090a0f;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00aaaa 0%, #22d3ee 100%);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
+}
+
+::-webkit-scrollbar-corner {
+  background: #090a0f;
+}
+
+/* Dedicated Professional Landing Page Scrollbar */
+.landing-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #06b6d4 #090a0f;
+  scroll-behavior: smooth;
+}
+
+.landing-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.landing-scrollbar::-webkit-scrollbar-track {
+  background: #090a0f;
+  border-left: 1px solid rgba(6, 182, 212, 0.15);
+}
+
+.landing-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0891b2 0%, #06b6d4 100%);
+  border-radius: 9999px;
+  border: 2px solid #090a0f;
+  transition: all 0.2s ease-in-out;
+}
+
+.landing-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #06b6d4 0%, #38bdf8 100%);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);
+}
+
+/* Horizontal scroll bar for code samples and tabs */
+.landing-scrollbar-x {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #0891b2 #090a0f;
+}
+
+.landing-scrollbar-x::-webkit-scrollbar {
+  height: 6px;
+}
+
+.landing-scrollbar-x::-webkit-scrollbar-track {
+  background: #090a0f;
+  border-radius: 3px;
+}
+
+.landing-scrollbar-x::-webkit-scrollbar-thumb {
+  background: #0891b2;
+  border-radius: 3px;
+}
+
+.landing-scrollbar-x::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+}
+
+/* Borland Cyan Scrollbars for retro DOS windows & cyan boxes */
+.dos-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #0000AA #00AAAA;
+}
+
+.dos-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.dos-scrollbar::-webkit-scrollbar-track {
+  background: #00AAAA;
+  border-left: 1px solid #0000AA;
+}
+
+.dos-scrollbar::-webkit-scrollbar-thumb {
+  background: #0000AA;
+  border: 1px solid #ffffff;
+}
+
+.dos-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #0000ff;
+}
+
+/* Styled Micro Horizontal Scrollbar for Keyboard Quick Bar */
+.keyboard-quick-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #00AAAA #18181b;
+  -webkit-overflow-scrolling: touch;
+}
+
+.keyboard-quick-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.keyboard-quick-scroll::-webkit-scrollbar-track {
+  background: #18181b;
+  border-radius: 2px;
+}
+
+.keyboard-quick-scroll::-webkit-scrollbar-thumb {
+  background: #00AAAA;
+  border-radius: 2px;
+}
+
+.keyboard-quick-scroll::-webkit-scrollbar-thumb:hover {
+  background: #00ff66;
+}
+
+/* Styled Horizontal Scrollbar for Modal Tabs & Settings */
+.modal-tab-scrollbar {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #00AAAA #18181b;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-tab-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.modal-tab-scrollbar::-webkit-scrollbar-track {
+  background: #18181b;
+  border-radius: 3px;
+}
+
+.modal-tab-scrollbar::-webkit-scrollbar-thumb {
+  background: #00AAAA;
+  border-radius: 3px;
+  border: 1px solid #000;
+}
+
+.modal-tab-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #00ff66;
+}
+
+
+

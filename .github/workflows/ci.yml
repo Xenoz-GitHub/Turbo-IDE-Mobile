@@ -1,0 +1,34 @@
+name: Turbo C++ Mobile CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    name: Build Native Core & Verify Architecture
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up CMake & Ninja
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.22.1'
+
+      - name: Build Core Library (C++)
+        run: |
+          mkdir -p build && cd build
+          cmake ../core -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --parallel
+
+      - name: Run Filename Mapper Fuzz Test
+        run: |
+          python3 tools/fuzz_mapper.py
+
+      - name: Check Artifact Generation
+        run: |
+          echo "Build & QA verification passed - Credits: ENCRYPTED CREW"

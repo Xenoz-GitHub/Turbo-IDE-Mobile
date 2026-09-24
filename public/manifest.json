@@ -1,0 +1,82 @@
+{
+  "id": "/",
+  "name": "Turbo C++ Mobile",
+  "short_name": "Turbo C++",
+  "description": "Production-quality mobile environment for Borland Turbo C++ 3.0 with DOSBox emulation, touch keyboard, conio.h, graphics.h, dos.h, and file sync.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#0000AA",
+  "background_color": "#0000AA",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "education",
+    "developer tools",
+    "utilities"
+  ],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Borland Turbo C++ 3.0 Desktop IDE with graphics.h compiler"
+    },
+    {
+      "src": "/screenshots/screenshot-mobile.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Turbo C++ Mobile IDE with Virtual Touch Keyboard and conio.h"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Launch Web IDE",
+      "short_name": "IDE",
+      "description": "Open Borland Turbo C++ 3.0 Web IDE",
+      "url": "/#ide",
+      "icons": [
+        {
+          "src": "/pwa-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "New C++ Project",
+      "short_name": "New Project",
+      "description": "Create a new C++ source file in Turbo C++",
+      "url": "/#ide",
+      "icons": [
+        {
+          "src": "/pwa-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

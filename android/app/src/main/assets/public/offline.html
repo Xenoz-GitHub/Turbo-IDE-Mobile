@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Offline Mode - Turbo C++ Mobile</title>
+  <meta name="theme-color" content="#0000AA">
+  <link rel="icon" type="image/svg+xml" href="/icon.svg">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #0000AA;
+      color: #FFFFFF;
+      font-family: 'Share Tech Mono', 'Courier New', Courier, monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      user-select: none;
+    }
+    .dos-window {
+      background-color: #0000AA;
+      border: 3px double #FFFFFF;
+      box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.6);
+      width: 100%;
+      max-width: 580px;
+      overflow: hidden;
+    }
+    .dos-title-bar {
+      background-color: #00AAAA;
+      color: #000000;
+      font-weight: bold;
+      padding: 4px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      border-bottom: 2px solid #FFFFFF;
+    }
+    .dos-body {
+      padding: 20px 16px;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+    .dos-badge {
+      display: inline-block;
+      background-color: #AA0000;
+      color: #FFFF55;
+      font-weight: bold;
+      padding: 2px 6px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+    .dos-heading {
+      color: #FFFF55;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .dos-text {
+      color: #FFFFFF;
+      margin-bottom: 14px;
+    }
+    .dos-info-box {
+      background-color: #000000;
+      color: #55FF55;
+      padding: 10px 12px;
+      border: 1px solid #555555;
+      margin-bottom: 16px;
+      font-size: 12px;
+    }
+    .dos-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .dos-btn {
+      background-color: #AAAAAA;
+      color: #000000;
+      border: 2px solid #FFFFFF;
+      border-right-color: #000000;
+      border-bottom-color: #000000;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.1s;
+    }
+    .dos-btn:hover {
+      background-color: #FFFFFF;
+    }
+    .dos-btn:active {
+      border-color: #000000;
+      border-right-color: #FFFFFF;
+      border-bottom-color: #FFFFFF;
+    }
+    .dos-btn-primary {
+      background-color: #00AAAA;
+      color: #000000;
+    }
+    .dos-footer {
+      margin-top: 16px;
+      font-size: 11px;
+      color: #AAAAAA;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="dos-window">
+    <div class="dos-title-bar">
+      <span>[■] BORLAND TURBO C++ 3.0</span>
+      <span>OFFLINE NOTICE</span>
+    </div>
+    <div class="dos-body">
+      <div class="dos-badge">SYSTEM STATUS: OFFLINE</div>
+      <div class="dos-heading">Network Disconnected — Turbo C++ Ready</div>
+      <p class="dos-text">
+        You are currently offline. Turbo C++ Mobile is engineered as a complete Progressive Web App (PWA) with full client-side execution.
+      </p>
+      <div class="dos-info-box">
+        ► Local C/C++ compiler and emulator: ACTIVE<br>
+        ► Local project workspace (D:\): PRESERVED<br>
+        ► BGI Graphics (640x480 EGA/VGA): READY<br>
+        ► Custom Virtual Keyboard: ENABLED
+      </div>
+      <p class="dos-text">
+        All your source files, compiler tools, and settings are cached on your device. You can continue writing and running code without an internet connection.
+      </p>
+      <div class="dos-actions">
+        <a href="/?source=pwa#ide" class="dos-btn dos-btn-primary">
+          ▶ Enter Turbo C++ IDE
+        </a>
+        <button onclick="window.location.reload()" class="dos-btn">
+          ↺ Retry Network
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="dos-footer">
+    Turbo C++ Mobile &bull; ENCRYPTED CREW &bull; Borland Turbo C++ 3.0 Architecture
+  </div>
+</body>
+</html>

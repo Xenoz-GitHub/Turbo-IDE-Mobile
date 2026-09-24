@@ -1,0 +1,13 @@
+[Directories]
+IncludeDirectories=C:\TC\INCLUDE
+LibraryDirectories=C:\TC\LIB
+OutputDirectory=D:\OUT
+SourceDirectories=D:\
+BgiDirectory=C:\TC\BGI
+
+[Compiler]
+MemoryModel=Large
+DebugInfo=On
+CaseSensitiveLink=Off
+ShowWarnings=On
+DisplayWarningsAsErrors=Off

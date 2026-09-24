@@ -1,0 +1,49 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+.vercel
+.env*
+
+# Security: Keystore files - NEVER commit these!
+*.keystore
+*.jks
+keystore.properties
+key.properties
+
+# Security: Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Security: Backup files that may contain sensitive data
+*.bak
+*.backup
+*.old
+
+# Security: Environment-specific configs
+.env.local
+.env.production
+.env.development
+
+# Security: IDE and editor files that may contain secrets
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+
+# Security: Build artifacts that may contain debug info
+*.map
+*.map.js
+
+# Android security
+android/app/release/
+android/app/debug/
+android/keystore/
+local.properties

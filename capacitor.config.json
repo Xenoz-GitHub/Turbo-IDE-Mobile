@@ -1,0 +1,41 @@
+{
+  "appId": "com.encryptedcrew.turbocpp",
+  "appName": "Turbo C++ Mobile",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https",
+    "hostname": "turbo-ide.vercel.app",
+    "allowNavigation": [
+      "turbo-ide.vercel.app",
+      "*.vercel.app"
+    ]
+  },
+  "android": {
+    "backgroundColor": "#0000AA",
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#0000AA",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": true,
+      "splashImmersive": true
+    },
+    "Keyboard": {
+      "resize": "native",
+      "style": "dark",
+      "resizeOnFullScreen": true
+    },
+    "StatusBar": {
+      "style": "dark",
+      "backgroundColor": "#0000AA"
+    },
+    "App": {
+      "overrideUserAgent": "TurboCppMobile/1.0"
+    }
+  }
+}

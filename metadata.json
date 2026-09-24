@@ -1,0 +1,7 @@
+{
+  "name": "Turbo C++ Mobile",
+  "description": "Production-quality mobile environment for Borland Turbo C++ 3.0 with DOSBox core, touch keyboard, conio.h, graphics.h, dos.h, file sync, and native Android/iOS architecture by ENCRYPTED CREW.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
