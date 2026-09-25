@@ -2362,29 +2362,17 @@ export const TurboIdeScreen: React.FC<TurboIdeScreenProps> = ({
                   </button>
                 )}
                 <button
-                  onClick={() => onSwitchScreenMode('ide')}
+                  onClick={() => {
+                    // Automatically stop execution if still running
+                    if (!isExecutionFinished && onBreakAction) {
+                      onBreakAction();
+                    }
+                    onSwitchScreenMode('ide');
+                  }}
                   className="px-2.5 py-0.5 bg-[#00AA00] hover:bg-emerald-400 active:bg-emerald-600 text-black font-bold font-dos text-xs flex items-center gap-1 cursor-pointer transition-colors shadow-xs"
-                  title="Return to Turbo C++ Editor"
+                  title="Return to Turbo C++ Editor (automatically stops execution)"
                 >
                   <span>Return to Editor</span>
-                </button>
-                <button
-                  onClick={() => {
-                    if (!isCompiled) {
-                      alert('Cannot run: Please compile the code first before running.');
-                      return;
-                    }
-                    onRunAction();
-                  }}
-                  disabled={!isCompiled}
-                  className={`px-2 py-0.5 font-dos text-xs font-bold flex items-center gap-1 transition-colors ${
-                    !isCompiled
-                      ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-700/50 opacity-40'
-                      : 'bg-zinc-800 hover:bg-zinc-700 text-yellow-300 border border-zinc-600 cursor-pointer shadow-xs'
-                  }`}
-                  title={!isCompiled ? 'Compile first before running' : 'Run program again'}
-                >
-                  <span>Run Again</span>
                 </button>
               </div>
             </div>
