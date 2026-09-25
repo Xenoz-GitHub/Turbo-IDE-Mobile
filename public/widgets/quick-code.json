@@ -1,0 +1,41 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Turbo C++ Mobile",
+          "size": "large",
+          "weight": "bolder",
+          "color": "accent"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Quick access to your C++ IDE",
+          "size": "small",
+          "wrap": true,
+          "color": "default"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open IDE",
+          "url": "/#ide"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "New File",
+          "url": "/#ide?action=new"
+        }
+      ]
+    }
+  ]
+}

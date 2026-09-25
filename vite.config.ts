@@ -52,6 +52,39 @@ export default defineConfig(() => {
               id: 'com.encryptedcrew.turbocpp'
             }
           ],
+          scope_extensions: [
+            {
+              origin: 'https://turbo-ide.vercel.app'
+            },
+            {
+              origin: 'https://*.vercel.app'
+            },
+            {
+              origin: 'https://github.com'
+            }
+          ],
+          note_taking: {
+            new_note_url: '/#ide?action=new'
+          },
+          widgets: [
+            {
+              name: 'Quick Code',
+              short_name: 'Code',
+              description: 'Quickly open and edit your C++ code',
+              tag: 'quick-code',
+              template: 'quick-code-template',
+              ms_ac_template: 'widgets/quick-code.json',
+              data: '/#ide',
+              type: 'application/json',
+              screenshots: [
+                {
+                  src: '/screenshots/screenshot-mobile.png',
+                  sizes: '720x1280',
+                  label: 'Quick Code Widget'
+                }
+              ]
+            }
+          ],
           icons: [
             {
               src: '/pwa-192x192.png',
@@ -179,7 +212,7 @@ export default defineConfig(() => {
           launch_handler: {
             client_mode: ['navigate-existing', 'auto']
           },
-          display_override: ['standalone', 'fullscreen', 'minimal-ui'],
+          display_override: ['window-controls-overlay', 'tabbed', 'standalone', 'fullscreen', 'minimal-ui'],
           edge_side_panel: {
             preferred_width: 400
           },
