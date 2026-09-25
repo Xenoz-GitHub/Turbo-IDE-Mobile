@@ -25,6 +25,9 @@ AUTHENTICATION_*.md
 PWA_*.md
 APK_*.md
 INSTALL_*.md
+KEYSTORE_INFO_SECURE.md
+GET_SHA256_FINGERPRINT.md
+get-apk-fingerprint.ps1
 
 # Security: Keystore files - NEVER commit these!
 *.keystore
