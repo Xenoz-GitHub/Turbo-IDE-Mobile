@@ -766,12 +766,30 @@ export class TurboCompiler {
         if (!v) continue;
         const rawToken = await this.getNextInputToken(requestInput, onEvent, currentColor);
 
-        // Convert token according to variable type
-        let parsedVal: any = rawToken;
-        if (!isNaN(Number(rawToken))) {
-          parsedVal = Number(rawToken);
+        // Determine expected type from variable declaration
+        const varType = this.getVariableType(v, vars);
+        
+        // Validate input based on variable type
+        if (varType === 'int' || varType === 'float' || varType === 'double' || varType === 'long') {
+          // Numeric types - must be a valid number
+          if (isNaN(Number(rawToken)) || rawToken.trim() === '') {
+            // Input validation failed - simulate cin failure
+            onEvent({ 
+              kind: 'text', 
+              text: `\n\nRuntime Error: Invalid input!\nExpected a number for variable '${v}', got: '${rawToken}'\n\nProgram terminated.\n`, 
+              color: '#FF5555', 
+              bgColor: currentBg 
+            });
+            throw new Error(`Invalid input: Expected number for '${v}', got '${rawToken}'`);
+          }
+          vars[v] = Number(rawToken);
+        } else if (varType === 'char') {
+          // Character type - take first character
+          vars[v] = rawToken.charAt(0) || '\0';
+        } else {
+          // String or unknown type - accept as is
+          vars[v] = rawToken;
         }
-        vars[v] = parsedVal;
       }
       // Separate I/O processing loop from the UI rendering cycle
       await new Promise(r => setTimeout(r, 0));
@@ -808,14 +826,38 @@ export class TurboCompiler {
     const scanfMatch = trimmed.match(/scanf\s*\((.*)\)/);
     if (scanfMatch) {
       const args = this.splitArgs(scanfMatch[1]);
+      const format = args[0] ? this.cleanFormatString(args[0]) : '';
+      
       for (let k = 1; k < args.length; k++) {
         const targetVar = args[k].replace(/^&/, '').trim();
         const rawToken = await this.getNextInputToken(requestInput, onEvent, currentColor);
-        let parsedVal: any = rawToken;
-        if (!isNaN(Number(rawToken))) {
-          parsedVal = Number(rawToken);
+        
+        // Determine expected type from format specifier or variable type
+        const formatSpec = this.extractFormatSpecifier(format, k - 1);
+        const varType = this.getVariableType(targetVar, vars);
+        
+        // Validate input based on format specifier or variable type
+        if (formatSpec === '%d' || formatSpec === '%i' || formatSpec === '%f' || formatSpec === '%lf' || 
+            varType === 'int' || varType === 'float' || varType === 'double' || varType === 'long') {
+          // Numeric input expected
+          if (isNaN(Number(rawToken)) || rawToken.trim() === '') {
+            // Input validation failed
+            onEvent({ 
+              kind: 'text', 
+              text: `\n\nRuntime Error: Invalid input!\nExpected a number for variable '${targetVar}', got: '${rawToken}'\n\nProgram terminated.\n`, 
+              color: '#FF5555', 
+              bgColor: currentBg 
+            });
+            throw new Error(`Invalid input: Expected number for '${targetVar}', got '${rawToken}'`);
+          }
+          vars[targetVar] = Number(rawToken);
+        } else if (formatSpec === '%c' || varType === 'char') {
+          // Character input
+          vars[targetVar] = rawToken.charAt(0) || '\0';
+        } else {
+          // String or unknown - accept as is
+          vars[targetVar] = rawToken;
         }
-        vars[targetVar] = parsedVal;
       }
       // Separate I/O processing loop from the UI rendering cycle
       await new Promise(r => setTimeout(r, 0));
@@ -1466,6 +1508,35 @@ export class TurboCompiler {
     if (/%\.2f/.test(fmt)) return fmt.replace(/%\.2f/, typeof val === 'number' ? val.toFixed(2) : String(val));
     if (/%[difs]/.test(fmt)) return fmt.replace(/%[difs]/, String(val));
     return fmt;
+  }
+
+  /**
+   * Get variable type from its declaration or current value
+   */
+  private getVariableType(varName: string, vars: Record<string, any>): string {
+    // Check if variable exists and infer type from current value
+    if (vars[varName] !== undefined) {
+      const val = vars[varName];
+      if (typeof val === 'number') {
+        // Could be int, float, double - default to int for integers
+        return Number.isInteger(val) ? 'int' : 'float';
+      }
+      if (typeof val === 'string') {
+        return val.length === 1 ? 'char' : 'string';
+      }
+    }
+    
+    // If variable not yet initialized, assume it needs numeric input by default
+    // (most common case in C++ for uninitialized variables in cin)
+    return 'int';
+  }
+
+  /**
+   * Extract format specifier from scanf format string by index
+   */
+  private extractFormatSpecifier(format: string, index: number): string {
+    const specs = format.match(/%[diouxXeEfFgGaAcspn]/g);
+    return specs && specs[index] ? specs[index] : '';
   }
 }
 
