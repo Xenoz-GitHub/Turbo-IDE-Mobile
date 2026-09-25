@@ -18,13 +18,19 @@ Turbo C++ Mobile brings the complete Borland Turbo C++ 3.0 development environme
 - Complete `graphics.h` BGI support (640x480 VGA)
 - Console functions (`conio.h`: clrscr, textcolor, gotoxy)
 - DOS system functions (`dos.h`: sound, delay)
-- Mobile-optimized virtual keyboard
-- Offline-first Progressive Web App
+- Mobile-optimized virtual keyboard with responsive design
+- Offline-first Progressive Web App (100% PWABuilder compliant)
 - Native Android APK with automatic updates
+- Periodic background sync for seamless updates
+- Background sync for offline resilience
+- Push notifications for re-engagement
 - File import/export to device storage
 - Real-time compilation and execution
+- Multi-tab support (desktop)
+- Custom window controls (desktop PWA)
 
-**Live Demo:** [https://turbo-ide.vercel.app](https://turbo-ide.vercel.app)
+**Live App:** [https://turbo-ide.vercel.app/#ide](https://turbo-ide.vercel.app/#ide)  
+**Landing Page:** [https://turbo-ide.vercel.app](https://turbo-ide.vercel.app)
 
 ---
 
@@ -49,15 +55,17 @@ Turbo C++ Mobile brings the complete Borland Turbo C++ 3.0 development environme
 ### For Users
 
 #### Web Version (PWA)
-1. Visit [https://turbo-ide.vercel.app](https://turbo-ide.vercel.app)
+1. Visit the app directly: [https://turbo-ide.vercel.app/#ide](https://turbo-ide.vercel.app/#ide)
 2. On Android Chrome: Tap menu → "Install app" or "Add to Home screen"
 3. On iOS Safari: Tap share → "Add to Home Screen"
+4. Enjoy offline-first experience with automatic background updates
 
 #### Android APK
 1. Visit [https://turbo-ide.vercel.app](https://turbo-ide.vercel.app)
-2. Click "Download APK / Android"
-3. Install the APK (enable "Unknown Sources" if prompted)
-4. Launch "Turbo C++ Mobile" from your app drawer
+2. Click "Install / APK" button in header
+3. Choose "Install WebAPK on Android Now" for instant install
+4. Or download APK file for manual installation
+5. Launch "Turbo C++ Mobile" from your app drawer
 
 ### For Developers
 
@@ -95,8 +103,14 @@ cp .env.example .env.local
 
 **Mobile:**
 - Capacitor 6.2 (native wrapper)
-- Progressive Web App (service worker)
-- Offline-first architecture
+- Progressive Web App (PWA)
+- Service Worker with advanced features:
+  - Periodic background sync (24-hour update checks)
+  - Background sync (offline resilience)
+  - Push notifications
+  - Offline-first caching strategy
+- PWABuilder 100% compliant
+- Google Play Store ready
 
 **Backend:**
 - Express.js (API server)
@@ -116,21 +130,26 @@ turbo-cpp-ide-mobile/
 │   ├── components/          # React components
 │   │   ├── TurboIdeScreen.tsx
 │   │   ├── VirtualKeyboard.tsx
-│   │   ├── PWABuilderHub.tsx
+│   │   ├── PWABuilderHub.tsx (NEW: Installation modal)
+│   │   ├── ShowcaseLandingPage.tsx
 │   │   └── ...
 │   ├── utils/               # Utility functions
 │   │   ├── turboCompiler.ts
 │   │   ├── security.ts
+│   │   ├── serviceWorkerHelpers.ts (NEW: PWA features)
 │   │   └── ...
 │   ├── types/               # TypeScript types
 │   ├── hooks/               # React hooks
+│   │   ├── usePWAInstall.ts (NEW: PWA install hook)
+│   │   └── ...
 │   └── main.tsx             # Entry point
 ├── server/
 │   └── index.ts             # Express API server
 ├── public/
 │   ├── .well-known/         # Digital Asset Links
-│   ├── manifest.webmanifest # PWA manifest
-│   └── sw-custom.js         # Service worker
+│   ├── widgets/             # PWA widget templates
+│   ├── manifest.webmanifest # PWA manifest (enhanced)
+│   └── sw-custom.js         # Service worker (enhanced)
 ├── android/                 # Capacitor Android project
 ├── assets/                  # DOS configuration files
 └── bridge/                  # C++ DOSBox bridge code
@@ -180,6 +199,58 @@ HMR is enabled by default in development. Disable with:
 ```bash
 DISABLE_HMR=true npm run dev
 ```
+
+---
+
+## PWA Features
+
+### Advanced Progressive Web App
+
+**PWABuilder Compliance: 100%**
+
+The app includes all advanced PWA features for optimal user experience and Google Play Store readiness:
+
+#### Periodic Background Sync
+- Automatic update checks every 24 hours
+- Works even when app is closed
+- Seamless updates without user intervention
+
+#### Background Sync
+- Offline-first data synchronization
+- Queues actions when offline
+- Automatically syncs when connection restored
+- No data loss during poor connectivity
+
+#### Push Notifications
+- Update notifications
+- Feature announcements
+- Critical alerts
+- User re-engagement
+
+#### Scope Extensions
+- Navigate to additional domains seamlessly
+- Vercel preview deployments supported
+- GitHub integration
+
+#### Multi-Tab Support (Desktop)
+- Open multiple C++ files in tabs
+- Desktop PWA enhancement
+
+#### Window Controls Overlay (Desktop)
+- Custom title bar integration
+- Native window controls
+- More screen space for IDE
+
+#### Home Screen Widgets
+- Quick access widget
+- Adaptive card UI
+- OS-level integration
+
+#### Note-Taking Integration
+- OS recognizes app as code/note editor
+- System share menu integration
+
+**Test PWA Compliance:** [PWABuilder](https://www.pwabuilder.com/?site=https://turbo-ide.vercel.app)
 
 ---
 
@@ -607,10 +678,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Links
 
-- **Live App:** [https://turbo-ide.vercel.app](https://turbo-ide.vercel.app)
+- **Live App:** [https://turbo-ide.vercel.app/#ide](https://turbo-ide.vercel.app/#ide)
+- **Landing Page:** [https://turbo-ide.vercel.app](https://turbo-ide.vercel.app)
 - **Repository:** [https://github.com/Xenoz-GitHub/Turbo-IDE-Mobile](https://github.com/Xenoz-GitHub/Turbo-IDE-Mobile)
-- **Security Report:** [SECURITY_AUDIT_REPORT.md](SECURITY_AUDIT_REPORT.md)
-- **Android Guide:** [ANDROID_SECURITY_GUIDE.md](ANDROID_SECURITY_GUIDE.md)
+- **PWABuilder Test:** [https://www.pwabuilder.com/?site=https://turbo-ide.vercel.app](https://www.pwabuilder.com/?site=https://turbo-ide.vercel.app)
+- **Issues:** [GitHub Issues](https://github.com/Xenoz-GitHub/Turbo-IDE-Mobile/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/Xenoz-GitHub/Turbo-IDE-Mobile/discussions)
 
 ---
 

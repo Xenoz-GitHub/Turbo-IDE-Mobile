@@ -10,6 +10,22 @@ coverage/
 .vercel
 .env*
 
+# Documentation files (keep local only)
+*_FIX.md
+*_IMPROVEMENTS.md
+*_ENHANCEMENTS.md
+*_GUIDE.md
+*_REPORT.md
+*_STATUS.md
+*_DECISION.md
+DEPLOYMENT_*.md
+BUILD_*.md
+SECURITY_*.md
+AUTHENTICATION_*.md
+PWA_*.md
+APK_*.md
+INSTALL_*.md
+
 # Security: Keystore files - NEVER commit these!
 *.keystore
 *.jks
@@ -47,3 +63,9 @@ android/app/release/
 android/app/debug/
 android/keystore/
 local.properties
+
+# Vercel configuration (may contain sensitive tokens)
+.vercel/
+
+# Deployment scripts (may contain credentials)
+deploy.ps1
