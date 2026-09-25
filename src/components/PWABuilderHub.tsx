@@ -290,6 +290,18 @@ export default function PWABuilderHub({ onClose }: PWABuilderHubProps) {
                     </span>
                   </button>
 
+                  {/* Direct APK Download Button */}
+                  <a
+                    href="/turbo-cpp-mobile.apk"
+                    download="turbo-cpp-mobile.apk"
+                    className="w-full py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 sm:gap-3 transition-all bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white shadow-lg"
+                  >
+                    <Smartphone className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <span className="leading-tight">
+                      Download APK File Directly
+                    </span>
+                  </a>
+
                   {/* Installation status info */}
                   {!pwaStatus.isInstallable && (
                     <div className="bg-blue-900/20 border border-blue-700 rounded-lg p-3 sm:p-4 text-blue-200 text-xs sm:text-sm">
@@ -304,13 +316,27 @@ export default function PWABuilderHub({ onClose }: PWABuilderHubProps) {
               )}
 
               {pwaStatus.isInstalled && (
-                <div className="bg-green-900/20 border border-green-700 rounded-lg p-3 sm:p-4 text-center">
-                  <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 text-green-400 mx-auto mb-2" />
-                  <p className="text-green-400 font-semibold text-sm sm:text-base">Already Installed as WebAPK!</p>
-                  <p className="text-green-300 text-xs sm:text-sm mt-1">
-                    Check your app drawer for the Turbo C++ icon
-                  </p>
-                </div>
+                <>
+                  <div className="bg-green-900/20 border border-green-700 rounded-lg p-3 sm:p-4 text-center">
+                    <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 text-green-400 mx-auto mb-2" />
+                    <p className="text-green-400 font-semibold text-sm sm:text-base">Already Installed as WebAPK!</p>
+                    <p className="text-green-300 text-xs sm:text-sm mt-1">
+                      Check your app drawer for the Turbo C++ icon
+                    </p>
+                  </div>
+
+                  {/* Direct APK Download Button for installed users */}
+                  <a
+                    href="/turbo-cpp-mobile.apk"
+                    download="turbo-cpp-mobile.apk"
+                    className="w-full py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 sm:gap-3 transition-all bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white shadow-lg"
+                  >
+                    <Smartphone className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <span className="leading-tight">
+                      Download APK File (Alternative Installation)
+                    </span>
+                  </a>
+                </>
               )}
 
               {/* Manual Steps */}

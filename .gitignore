@@ -67,6 +67,10 @@ android/app/debug/
 android/keystore/
 local.properties
 
+# APK files - too large for git, host separately
+*.apk
+*.aab
+
 # Vercel configuration (may contain sensitive tokens)
 .vercel/
 
