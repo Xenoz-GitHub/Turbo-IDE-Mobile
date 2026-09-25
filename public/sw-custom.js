@@ -295,62 +295,6 @@ async function getCacheSize() {
   return totalSize;
 }
 
-/**
- * Handle push notifications (for future update alerts)
- */
-self.addEventListener('push', (event) => {
-  const data = event.data ? event.data.json() : {};
-  
-  const options = {
-    body: data.body || 'A new version is available!',
-    icon: '/pwa-192x192.png',
-    badge: '/pwa-192x192.png',
-    vibrate: [200, 100, 200],
-    data: {
-      url: data.url || '/',
-      action: data.action || 'UPDATE'
-    },
-    actions: [
-      {
-        action: 'update',
-        title: 'Update Now'
-      },
-      {
-        action: 'later',
-        title: 'Later'
-      }
-    ]
-  };
-  
-  event.waitUntil(
-    self.registration.showNotification(
-      data.title || 'Turbo C++ Mobile Update',
-      options
-    )
-  );
-});
-
-/**
- * Handle notification clicks
- */
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
-  
-  if (event.action === 'update') {
-    // Open app and trigger update
-    event.waitUntil(
-      clients.openWindow(event.notification.data.url).then((client) => {
-        if (client) {
-          client.postMessage({
-            type: 'TRIGGER_UPDATE',
-            data: event.notification.data
-          });
-        }
-      })
-    );
-  }
-});
-
 console.log('[SW] Service worker script loaded');
 
 /**
@@ -364,6 +308,8 @@ self.addEventListener('periodicsync', (event) => {
     event.waitUntil(checkForUpdates());
   } else if (event.tag === 'sync-user-data') {
     event.waitUntil(syncUserData());
+  } else if (event.tag === 'content-update') {
+    event.waitUntil(updateCachedContent());
   }
 });
 
@@ -380,8 +326,42 @@ self.addEventListener('sync', (event) => {
     event.waitUntil(syncSettings());
   } else if (event.tag === 'check-updates') {
     event.waitUntil(checkForUpdates());
+  } else if (event.tag === 'upload-code') {
+    event.waitUntil(uploadPendingCode());
   }
 });
+
+/**
+ * Update cached content during periodic sync
+ */
+async function updateCachedContent() {
+  try {
+    console.log('[SW] Updating cached content...');
+    
+    const cache = await caches.open(CACHE_NAME);
+    const urlsToUpdate = [
+      '/',
+      '/index.html',
+      '/manifest.webmanifest'
+    ];
+    
+    for (const url of urlsToUpdate) {
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          await cache.put(url, response);
+        }
+      } catch (error) {
+        console.log('[SW] Failed to update:', url);
+      }
+    }
+    
+    return Promise.resolve();
+  } catch (error) {
+    console.error('[SW] Error updating cached content:', error);
+    return Promise.reject(error);
+  }
+}
 
 /**
  * Sync user data in background
@@ -460,3 +440,157 @@ async function syncSettings() {
     return Promise.reject(error);
   }
 }
+
+/**
+ * Upload pending code files (for future cloud sync)
+ */
+async function uploadPendingCode() {
+  try {
+    console.log('[SW] Uploading pending code files...');
+    
+    const clients = await self.clients.matchAll();
+    
+    clients.forEach((client) => {
+      client.postMessage({
+        type: 'UPLOAD_PENDING',
+        timestamp: Date.now()
+      });
+    });
+    
+    return Promise.resolve();
+  } catch (error) {
+    console.error('[SW] Error uploading code:', error);
+    return Promise.reject(error);
+  }
+}
+
+/**
+ * Enhanced push notification handler with notification API
+ */
+self.addEventListener('push', (event) => {
+  console.log('[SW] Push notification received');
+  
+  let data = {};
+  
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch (error) {
+    console.error('[SW] Error parsing push data:', error);
+    data = {
+      title: 'Turbo C++ Mobile',
+      body: 'New update available'
+    };
+  }
+  
+  const title = data.title || 'Turbo C++ Mobile Update';
+  const options = {
+    body: data.body || 'A new version is available!',
+    icon: '/pwa-192x192.png',
+    badge: '/pwa-192x192.png',
+    image: data.image || '/pwa-512x512.png',
+    vibrate: [200, 100, 200],
+    tag: data.tag || 'update-notification',
+    requireInteraction: data.requireInteraction || false,
+    renotify: true,
+    data: {
+      url: data.url || '/#ide',
+      action: data.action || 'UPDATE',
+      timestamp: Date.now()
+    },
+    actions: [
+      {
+        action: 'update',
+        title: 'Update Now',
+        icon: '/pwa-192x192.png'
+      },
+      {
+        action: 'later',
+        title: 'Later',
+        icon: '/pwa-192x192.png'
+      }
+    ]
+  };
+  
+  event.waitUntil(
+    self.registration.showNotification(title, options)
+  );
+});
+
+/**
+ * Enhanced notification click handler
+ */
+self.addEventListener('notificationclick', (event) => {
+  console.log('[SW] Notification clicked:', event.action);
+  
+  event.notification.close();
+  
+  const urlToOpen = event.notification.data.url || '/#ide';
+  
+  if (event.action === 'update') {
+    // Open app and trigger update
+    event.waitUntil(
+      clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+        // Check if app is already open
+        for (let i = 0; i < clientList.length; i++) {
+          const client = clientList[i];
+          if (client.url.includes('/#ide') && 'focus' in client) {
+            client.focus();
+            client.postMessage({
+              type: 'TRIGGER_UPDATE',
+              data: event.notification.data
+            });
+            return;
+          }
+        }
+        // If not open, open new window
+        if (clients.openWindow) {
+          return clients.openWindow(urlToOpen).then((client) => {
+            if (client) {
+              client.postMessage({
+                type: 'TRIGGER_UPDATE',
+                data: event.notification.data
+              });
+            }
+          });
+        }
+      })
+    );
+  } else if (event.action === 'later') {
+    // Just close, do nothing
+    console.log('[SW] User chose to update later');
+  } else {
+    // Default action - just open the app
+    event.waitUntil(
+      clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+        for (let i = 0; i < clientList.length; i++) {
+          const client = clientList[i];
+          if (client.url.includes('/#ide') && 'focus' in client) {
+            return client.focus();
+          }
+        }
+        if (clients.openWindow) {
+          return clients.openWindow(urlToOpen);
+        }
+      })
+    );
+  }
+});
+
+/**
+ * Handle notification close event
+ */
+self.addEventListener('notificationclose', (event) => {
+  console.log('[SW] Notification closed:', event.notification.tag);
+  
+  // Track notification dismissal (could send to analytics)
+  const clients = self.clients.matchAll();
+  clients.then((clientList) => {
+    clientList.forEach((client) => {
+      client.postMessage({
+        type: 'NOTIFICATION_CLOSED',
+        tag: event.notification.tag,
+        timestamp: Date.now()
+      });
+    });
+  });
+});
