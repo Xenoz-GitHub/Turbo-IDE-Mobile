@@ -283,3 +283,63 @@ html {
 
 
 
+
+
+/* Print Styles - Hide UI elements when printing */
+@media print {
+  /* Hide virtual keyboard completely */
+  .w-full.shrink-0,
+  .absolute.bottom-0.left-0.right-0.z-30 {
+    display: none !important;
+  }
+  
+  /* Hide all dropdown menus */
+  [class*="dropdown"],
+  [class*="menu-dropdown"],
+  .fixed.bg-zinc-900.border {
+    display: none !important;
+  }
+  
+  /* Hide navigation and controls */
+  header,
+  nav,
+  .z-50,
+  button:not(.print-button) {
+    display: none !important;
+  }
+  
+  /* Hide modals and overlays */
+  .fixed.inset-0.bg-black,
+  .backdrop-blur-sm {
+    display: none !important;
+  }
+  
+  /* Ensure editor content is visible and clean */
+  .editor-content,
+  pre,
+  code {
+    background: white !important;
+    color: black !important;
+    border: none !important;
+  }
+  
+  /* Hide CRT effects for clean print */
+  .crt-scanlines::before {
+    display: none !important;
+  }
+  
+  /* Optimize page layout for printing */
+  @page {
+    margin: 1cm;
+  }
+  
+  body {
+    background: white !important;
+  }
+  
+  /* Ensure code is readable */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}

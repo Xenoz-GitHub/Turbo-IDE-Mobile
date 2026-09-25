@@ -1124,8 +1124,13 @@ export const TurboIdeScreen: React.FC<TurboIdeScreenProps> = ({
           hotkeyChar: 'P',
           helpText: 'Print contents of active edit window',
           action: () => {
+            // Close all dropdowns first
             setActiveMenuId(null);
-            window.print();
+            
+            // Small delay to ensure menu closes before print dialog
+            setTimeout(() => {
+              window.print();
+            }, 50);
           }
         },
         {
