@@ -352,3 +352,111 @@ self.addEventListener('notificationclick', (event) => {
 });
 
 console.log('[SW] Service worker script loaded');
+
+/**
+ * Periodic Background Sync - Check for updates regularly
+ * Requires periodic-background-sync permission
+ */
+self.addEventListener('periodicsync', (event) => {
+  console.log('[SW] Periodic background sync triggered:', event.tag);
+  
+  if (event.tag === 'check-updates') {
+    event.waitUntil(checkForUpdates());
+  } else if (event.tag === 'sync-user-data') {
+    event.waitUntil(syncUserData());
+  }
+});
+
+/**
+ * Background Sync - Sync data when connection is restored
+ * Handles offline actions and queued requests
+ */
+self.addEventListener('sync', (event) => {
+  console.log('[SW] Background sync triggered:', event.tag);
+  
+  if (event.tag === 'sync-user-files') {
+    event.waitUntil(syncUserFiles());
+  } else if (event.tag === 'sync-settings') {
+    event.waitUntil(syncSettings());
+  } else if (event.tag === 'check-updates') {
+    event.waitUntil(checkForUpdates());
+  }
+});
+
+/**
+ * Sync user data in background
+ */
+async function syncUserData() {
+  try {
+    console.log('[SW] Syncing user data...');
+    
+    // Get all clients
+    const clients = await self.clients.matchAll();
+    
+    // Notify clients to sync their data
+    clients.forEach((client) => {
+      client.postMessage({
+        type: 'SYNC_DATA',
+        timestamp: Date.now()
+      });
+    });
+    
+    // Check for updates while we're at it
+    await checkForUpdates();
+    
+    return Promise.resolve();
+  } catch (error) {
+    console.error('[SW] Error syncing user data:', error);
+    return Promise.reject(error);
+  }
+}
+
+/**
+ * Sync user files when connection is restored
+ */
+async function syncUserFiles() {
+  try {
+    console.log('[SW] Syncing user files...');
+    
+    // Get all clients
+    const clients = await self.clients.matchAll();
+    
+    // Notify clients about sync
+    clients.forEach((client) => {
+      client.postMessage({
+        type: 'SYNC_FILES',
+        timestamp: Date.now()
+      });
+    });
+    
+    return Promise.resolve();
+  } catch (error) {
+    console.error('[SW] Error syncing files:', error);
+    return Promise.reject(error);
+  }
+}
+
+/**
+ * Sync settings when connection is restored
+ */
+async function syncSettings() {
+  try {
+    console.log('[SW] Syncing settings...');
+    
+    // Get all clients
+    const clients = await self.clients.matchAll();
+    
+    // Notify clients about settings sync
+    clients.forEach((client) => {
+      client.postMessage({
+        type: 'SYNC_SETTINGS',
+        timestamp: Date.now()
+      });
+    });
+    
+    return Promise.resolve();
+  } catch (error) {
+    console.error('[SW] Error syncing settings:', error);
+    return Promise.reject(error);
+  }
+}

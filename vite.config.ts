@@ -31,7 +31,7 @@ export default defineConfig(() => {
           'sw-custom.js',
         ],
         manifest: {
-          id: '/',
+          id: '/#ide',
           name: 'Turbo C++ Mobile',
           short_name: 'Turbo C++',
           description: 'Production-quality mobile environment for Borland Turbo C++ 3.0 with conio.h, graphics.h, touch keyboard, and native Android/iOS architecture.',
@@ -82,7 +82,8 @@ export default defineConfig(() => {
                   sizes: '720x1280',
                   label: 'Quick Code Widget'
                 }
-              ]
+              ],
+              url: '/#ide'
             }
           ],
           icons: [
